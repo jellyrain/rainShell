@@ -86,19 +86,19 @@ random() {
 # 累加器：第一个参数是累加多少次，第二个参数是初始值（默认为 0），第三个参数是累加量（默认为 1）
 accumulate() {
     if [ -z "$2" ]; then
-        t1=0
+        local t1=0
     else
-        t1=$2
+        local t1=$2
     fi
 
     if [ -z "$3" ]; then
-        t2=1
+        local t2=1
     else
-        t2=$3
+        local t2=$3
     fi
 
     for i in $(seq "$1"); do
-        ((t1+=t2))
+        ((t1 += t2))
     done
 
     echo $t1
