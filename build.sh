@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+path_load=""
+
 load_source() {
     grep "source" <"$1" | while IFS= read -r line; do
         echo "$line"
@@ -15,8 +17,8 @@ load() {
 
     for path in $(load_source "$1"); do
         if ((i % 2 == 0)); then
-            echo "$path"
-            load "$path" "$2"
+            echo "${path_load}${path}"
+            load "${path_load}${path}" "$2"
         fi
         ((i++)) || true
     done
@@ -25,6 +27,7 @@ load() {
 }
 
 build() {
-    echo "#!/usr/bin/env bash" >"$2"
+    echo "#!/usr/bin/env bash" >"${2}"
+    path_load="$(echo "$1" | grep -o "^.*/")"
     load "$1" "$2"
 }
